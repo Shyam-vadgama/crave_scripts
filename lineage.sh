@@ -103,9 +103,10 @@ send_tg_msg "BUILD STARTED ⏳%0A├─ 📱 <b>Device:</b> ${DEVICE}%0A├─ �
 # 🔄 Sync
 # ==========================================
 rm -rf .repo/local_manifests
-rm -rf device/advan/X1
-rm -rf vendor/advan/X1
-rm -rf out/target/product/X1
+rm -rf device/xiaomi/warm
+rm -rf vendor/xiaomi/warm
+rm -rf out/target/product/warm
+rm -rf device_qcom_sepolicy_vndr
 
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs
 
