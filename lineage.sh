@@ -15,7 +15,6 @@ if [ -z "$TELEGRAM_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
     echo "💡 Add ~/.bashrc:"
     echo "   export TELEGRAM_TOKEN=\"token\""
     echo "   export TELEGRAM_CHAT_ID=\"chat_id\""
-    exit 1
 fi
 
 rm -f "/tmp/build_failed.lock"
