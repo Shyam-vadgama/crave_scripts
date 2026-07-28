@@ -107,9 +107,9 @@ rm -rf vendor/xiaomi/warm
 rm -rf out/target/product/warm
 rm -rf device_qcom_sepolicy_vndr
 
-repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs
+repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth 1
 
-git clone https://github.com/shyam-vadgama/local_manifest.git -b lineage-23.2 .repo/local_manifests
+git clone https://github.com/shyam-vadgama/local_manifest.git -b lineage-23.2 .repo/local_manifests --depth 1
 
 /opt/crave/resync.sh || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
