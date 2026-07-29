@@ -125,8 +125,7 @@ set +eE
 . build/envsetup.sh
 lunch lineage_warm-ap4a-user || lunch lineage_warm-ap4a-userdebug || lunch lineage_warm-bp4a-userdebug || brunch warm  
 set -eE
-
-make installclean
+set -o pipefail
 
 mka bacon 
 
