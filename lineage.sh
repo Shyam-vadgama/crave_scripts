@@ -78,7 +78,7 @@ handle_error() {
     local ELAPSED=$(get_elapsed)
     local MSG="BUILD FAILED ❌%0A"
     MSG+="├─ 📱 <b>Device:</b> ${DEVICE}%0A"
-    MSG+="├─ 💿 <b>ROM:</b> AxionOS%0A"
+    MSG+="├─ 💿 <b>ROM:</b> LineageOS%0A"
     MSG+="├─ ⏱️ <b>Time:</b> ${ELAPSED}%0A"
     MSG+="├─ ⚠️ <b>Error:</b> Line ${LINE}"
     if [ -n "$LOG_LINK" ]; then
