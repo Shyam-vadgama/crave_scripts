@@ -139,7 +139,7 @@ if ! command -v jq &>/dev/null; then
     sudo apt-get install -y jq > /dev/null
 fi
 
-ROM_ZIP=$(ls -t out/target/product/warm/lineageos23.2*UNOFFICIAL*.zip 2>/dev/null | head -n 1 || true)
+ROM_ZIP=$(ls -t out/target/product/warm/lineageos*UNOFFICIAL*.zip 2>/dev/null | head -n 1 || true)
 
 if [ -z "$ROM_ZIP" ] || [ ! -f "$ROM_ZIP" ]; then
     handle_error $LINENO
