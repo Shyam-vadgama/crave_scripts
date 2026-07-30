@@ -5,7 +5,7 @@
 # ==========================================
 START_TIME=$(date +%s)
 LOG_FILE="build_warm_$(date +%Y%m%d_%H%M).log"
-DEVICE="X1"
+DEVICE="warm"
 
 [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
 
@@ -15,7 +15,6 @@ if [ -z "$TELEGRAM_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
     echo "💡 Add ~/.bashrc:"
     echo "   export TELEGRAM_TOKEN=\"token\""
     echo "   export TELEGRAM_CHAT_ID=\"chat_id\""
-    exit 1
 fi
 
 rm -f "/tmp/build_failed.lock"
@@ -108,9 +107,9 @@ rm -rf vendor/xiaomi/warm
 rm -rf out/target/product/warm
 rm -rf device_qcom_sepolicy_vndr
 
-repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs 
+repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs --depth 1
 
-git clone https://github.com/shyam-vadgama/local_manifest.git -b a17 .repo/local_manifests
+git clone https://github.com/shyam-vadgama/local_manifest.git -b a17 .repo/local_manifests --depth 1
 
 /opt/crave/resync.sh || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
