@@ -106,9 +106,6 @@ rm -rf device/xiaomi/warm
 rm -rf vendor/xiaomi/warm
 rm -rf out/target/product/warm
 rm -rf device_qcom_sepolicy_vndr
-rm -rf prebuilts/sdk
-rm -rf build/soong
-rm -rf build/make
 
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth 1
 
