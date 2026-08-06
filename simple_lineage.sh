@@ -25,7 +25,8 @@ git clone https://github.com/Shyam-vadgama/warm_kernel -b main device/xiaomi/war
 git clone https://github.com/LineageOS/android_hardware_xiaomi -b lineage-23.2 hardware/xiaomi
 
 # Vendor tree
-git clone https://github.com/Shyam-vadgama/vendor_xiaomi_warm.git -b lineage-23.2 vendor/xiaomi/warm && cd vendor/xiaomi/warm && git checkout c0417ffc868d6f96f8e2ee6252eabbcebfa91927 && cd /crave-devspace/lineage
+git clone https://github.com/Shyam-vadgama/vendor_xiaomi_warm.git -b lineage-23.2 vendor/xiaomi/warm
+cd vendor/xiaomi/warm && git checkout c0417ffc868d6f96f8e2ee6252eabbcebfa91927 && cd -
 
 git clone https://github.com/Shyam-vadgama/android_hardware_qcom-caf_common -b lineage-23.2 hardware/qcom-caf/common
 
