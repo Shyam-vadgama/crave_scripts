@@ -19,7 +19,7 @@ rm -rf hardware/qcom-caf/common
 git clone https://github.com/Shyam-vadgama/device_xiaomi_warm -b lineage-23.2 device/xiaomi/warm
 
 # Kernel
-git clone https://github.com/Shyam-vadgama/warm_kernel -b main device/xiaomi/warm-kernel
+git clone https://github.com/Shyam-vadgama/warm-kernel -b main device/xiaomi/warm-kernel
 
 # Hardware
 git clone https://github.com/LineageOS/android_hardware_xiaomi -b lineage-23.2 hardware/xiaomi
