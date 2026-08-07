@@ -1,7 +1,14 @@
 #!/bin/bash
 set -e
 
-rm -rf .repo/local_manifests
+# Local manifests setup
+mkdir -p .repo/local_manifests
+cat > .repo/local_manifests/remove.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remove-project name="platform/packages/modules/UprobeStats" />
+</manifest>
+EOF
 
 # Repo init
 repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
@@ -31,5 +38,5 @@ cd vendor/xiaomi/warm && git checkout c0417ffc868d6f96f8e2ee6252eabbcebfa91927 &
 git clone https://github.com/Shyam-vadgama/android_hardware_qcom-caf_common -b lineage-23.2 hardware/qcom-caf/common
 
 . build/envsetup.sh
-lunch lineage_warm-ap4a-userdebug || brunch warm
+lunch lineage_warm-ap4a-userdebug
 mka bacon
