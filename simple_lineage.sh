@@ -6,7 +6,7 @@ mkdir -p .repo/local_manifests
 cat > .repo/local_manifests/remove.xml << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remove-project name="platform/packages/modules/UprobeStats" />
+  <remove-project name="packages/modules/UprobeStats" />
 </manifest>
 EOF
 
