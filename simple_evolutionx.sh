@@ -9,6 +9,7 @@ echo "========================================"
 # Remove only repo's manifest/client metadata.
 rm -rf .repo/manifests
 rm -rf .repo/manifests.git
+rm -rf .repo/local_manifest
 
 echo "========================================"
 echo " Initializing Evolution-X manifest"
