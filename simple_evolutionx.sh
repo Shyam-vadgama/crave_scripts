@@ -10,6 +10,8 @@ echo "========================================"
 rm -rf .repo/manifests
 rm -rf .repo/manifests.git
 rm -rf .repo/local_manifest
+rm -rf .repo/projects
+rm -rf .repo/project-objects
 
 echo "========================================"
 echo " Initializing Evolution-X manifest"
