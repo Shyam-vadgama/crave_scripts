@@ -12,7 +12,6 @@ rm -rf .repo/manifests.git
 rm -rf .repo/local_manifest
 rm -rf .repo/projects
 rm -rf .repo/project-objects
-rm -rf .repo out bionic build/soong build/ make prebuilts/ndk \
 
 echo "========================================"
 echo " Initializing Evolution-X manifest"
