@@ -14,6 +14,12 @@ rm -rf .repo/projects
 rm -rf .repo/project-objects
 
 echo "========================================"
+echo " Removing conflicting packages"
+echo "========================================"
+rm -rf packages/overlays/Lineage
+rm -rf packages/apps/ParanoidSense
+
+echo "========================================"
 echo " Initializing Evolution-X manifest"
 echo "========================================"
 
