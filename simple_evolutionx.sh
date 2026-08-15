@@ -74,10 +74,6 @@ echo "========================================"
 git clone https://github.com/Shyam-vadgama/vendor_xiaomi_warm.git \
     -b lineage-23.2 vendor/xiaomi/warm
 
-cd vendor/xiaomi/warm
-git checkout c0417ffc868d6f96f8e2ee6252eabbcebfa91927
-cd -
-
 echo "========================================"
 echo " Cloning Qualcomm CAF common"
 echo "========================================"
