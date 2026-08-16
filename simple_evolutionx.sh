@@ -82,7 +82,6 @@ echo "========================================"
 
 . build/envsetup.sh
 
-lunch lineage_warm-ap4a-userdebug || \
 lunch lineage_warm-bp4a-userdebug
 
 m evolution
