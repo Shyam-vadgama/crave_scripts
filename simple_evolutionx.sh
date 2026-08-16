@@ -7,12 +7,7 @@ echo "========================================"
 
 # Keep downloaded source/cache.
 # Remove only repo's manifest/client metadata.
-rm -rf .repo/manifests
-rm -rf .repo/manifests.git
 rm -rf .repo/local_manifest
-rm -rf .repo/projects
-rm -rf .repo/project-objects
-rm -rf vendor/pixel/gms
 
 echo "========================================"
 echo " Removing conflicting packages"
