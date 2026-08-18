@@ -67,38 +67,23 @@ echo "========================================"
 BOARDS_MK="hardware/qcom-caf/common/qcom_boards.mk"
 DEFS_MK="hardware/qcom-caf/common/qcom_defs.mk"
 
-# --- qcom_boards.mk patch ---
-if ! grep -q 'QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"; then
-    if grep -q 'QCOM_BOARD_PLATFORMS += volcano' "$BOARDS_MK"; then
-        sed -i '/^QCOM_BOARD_PLATFORMS += volcano$/a QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"
-    elif grep -q 'QCOM_BOARD_PLATFORMS += pineapple' "$BOARDS_MK"; then
-        sed -i '/^QCOM_BOARD_PLATFORMS += pineapple$/a QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"
-    else
-        echo "QCOM_BOARD_PLATFORMS += pitti" >> "$BOARDS_MK"
-        echo "WARNING: pitti appended at end of $BOARDS_MK — verify manually"
-    fi
-    echo "Patched: pitti added to $BOARDS_MK"
-else
-    echo "Skip: pitti already in $BOARDS_MK"
-fi
+# Fresh fetch — pichle builds ki corrupt state clean karo
+curl -fsSL \
+    "https://raw.githubusercontent.com/LineageOS/android_hardware_qcom-caf_common/lineage-22.2/qcom_boards.mk" \
+    -o "$BOARDS_MK"
 
-# --- qcom_defs.mk patch ---
-if ! grep -q 'pitti' "$DEFS_MK"; then
-    sed -i '/^UM_6_1_FAMILY :=/ s/$/ pitti/' "$DEFS_MK"
-    echo "Patched: pitti added to UM_6_1_FAMILY in $DEFS_MK"
-else
-    echo "Skip: pitti already in $DEFS_MK"
-fi
+curl -fsSL \
+    "https://raw.githubusercontent.com/LineageOS/android_hardware_qcom-caf_common/lineage-22.2/qcom_defs.mk" \
+    -o "$DEFS_MK"
 
-# --- Verify ---
-echo ""
+# Fresh file pe pitti add karo
+sed -i '/^QCOM_BOARD_PLATFORMS += volcano/a QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"
+sed -i '/^UM_6_1_FAMILY :=/ s/$/ pitti/' "$DEFS_MK"
+
 echo "=== Patch Verification ==="
-echo "--- $BOARDS_MK (UM 6.1 lines) ---"
 grep -n 'pineapple\|volcano\|pitti' "$BOARDS_MK"
-echo "--- $DEFS_MK (UM_6_1_FAMILY) ---"
 grep -n 'UM_6_1_FAMILY' "$DEFS_MK"
 echo "=========================="
-echo ""
 
 echo "========================================"
 echo " Starting build"
