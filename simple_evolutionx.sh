@@ -64,15 +64,41 @@ echo "========================================"
 echo " Patching Qualcomm CAF common"
 echo "========================================"
 
-# qcom_boards.mk — pitti add karo (idempotent)
-grep -q 'QCOM_BOARD_PLATFORMS += pitti' hardware/qcom-caf/common/qcom_boards.mk || \
-    sed -i '/QCOM_BOARD_PLATFORMS += volcano/a QCOM_BOARD_PLATFORMS += pitti' \
-        hardware/qcom-caf/common/qcom_boards.mk
+BOARDS_MK="hardware/qcom-caf/common/qcom_boards.mk"
+DEFS_MK="hardware/qcom-caf/common/qcom_defs.mk"
 
-# qcom_defs.mk — UM_6_1_FAMILY mein pitti add karo (idempotent)
-grep -q 'pitti' hardware/qcom-caf/common/qcom_defs.mk || \
-    sed -i 's/UM_6_1_FAMILY := pineapple volcano/UM_6_1_FAMILY := pineapple volcano pitti/' \
-        hardware/qcom-caf/common/qcom_defs.mk
+# --- qcom_boards.mk patch ---
+if ! grep -q 'QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"; then
+    if grep -q 'QCOM_BOARD_PLATFORMS += volcano' "$BOARDS_MK"; then
+        sed -i '/^QCOM_BOARD_PLATFORMS += volcano$/a QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"
+    elif grep -q 'QCOM_BOARD_PLATFORMS += pineapple' "$BOARDS_MK"; then
+        sed -i '/^QCOM_BOARD_PLATFORMS += pineapple$/a QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"
+    else
+        echo "QCOM_BOARD_PLATFORMS += pitti" >> "$BOARDS_MK"
+        echo "WARNING: pitti appended at end of $BOARDS_MK — verify manually"
+    fi
+    echo "Patched: pitti added to $BOARDS_MK"
+else
+    echo "Skip: pitti already in $BOARDS_MK"
+fi
+
+# --- qcom_defs.mk patch ---
+if ! grep -q 'pitti' "$DEFS_MK"; then
+    sed -i '/^UM_6_1_FAMILY :=/ s/$/ pitti/' "$DEFS_MK"
+    echo "Patched: pitti added to UM_6_1_FAMILY in $DEFS_MK"
+else
+    echo "Skip: pitti already in $DEFS_MK"
+fi
+
+# --- Verify ---
+echo ""
+echo "=== Patch Verification ==="
+echo "--- $BOARDS_MK (UM 6.1 lines) ---"
+grep -n 'pineapple\|volcano\|pitti' "$BOARDS_MK"
+echo "--- $DEFS_MK (UM_6_1_FAMILY) ---"
+grep -n 'UM_6_1_FAMILY' "$DEFS_MK"
+echo "=========================="
+echo ""
 
 echo "========================================"
 echo " Starting build"
