@@ -40,7 +40,25 @@ echo " Cloning kernel"
 echo "========================================"
 
 git clone https://github.com/Shyam-vadgama/warm-kernel \
-    -b main device/xiaomi/warm-kernel
+    -b main device/xiaomi/warm_kernel
+
+echo "========================================"
+echo " Renaming kernel modules directory"
+echo "========================================"
+
+OLD_KVER="6.1.118-android14-11-ga3b9c44908dd-ab13320413"
+NEW_KVER="6.1.138-android14-11-g0c3d559bcd85-ab14529422"
+MODULES_BASE="device/xiaomi/warm_kernel/modules/system_dlkm"
+
+if [ -d "$MODULES_BASE/$OLD_KVER" ]; then
+    mv "$MODULES_BASE/$OLD_KVER" "$MODULES_BASE/$NEW_KVER"
+    echo "Renamed: $OLD_KVER -> $NEW_KVER"
+elif [ -d "$MODULES_BASE/$NEW_KVER" ]; then
+    echo "Skip: $NEW_KVER already exists"
+else
+    echo "WARNING: Neither old nor new kernel version dir found in $MODULES_BASE"
+    ls "$MODULES_BASE/" 2>/dev/null || echo "Directory $MODULES_BASE does not exist"
+fi
 
 echo "========================================"
 echo " Cloning Xiaomi hardware"
@@ -82,6 +100,22 @@ grep -n 'UM_6_1_FAMILY' "$DEFS_MK"
 echo "=========================="
 
 echo "========================================"
+echo " Updating maintainer in lineage_warm.mk"
+echo "========================================"
+
+LINEAGE_MK="device/xiaomi/warm/lineage_warm.mk"
+
+# Remove existing maintainer line if present
+sed -i '/^[[:space:]]*INFINITY_MAINTAINER[[:space:]]*:=/d' "$LINEAGE_MK"
+
+# Add maintainer as the last line
+echo 'INFINITY_MAINTAINER := "Shyam-Vadgama"' >> "$LINEAGE_MK"
+
+echo "Added:"
+tail -n 1 "$LINEAGE_MK"
+
+
+echo "========================================"
 echo " Applying local manifest fixes"
 echo "========================================"
 
@@ -100,9 +134,7 @@ echo " Starting build"
 echo "========================================"
 
 . build/envsetup.sh
-
 m installclean
-
 lunch lineage_warm-userdebug
 
 m bacon -j$(nproc --all)
