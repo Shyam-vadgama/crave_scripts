@@ -101,6 +101,8 @@ echo "========================================"
 
 . build/envsetup.sh
 
+m installclean
+
 lunch lineage_warm-userdebug
 
 m bacon -j$(nproc --all)
