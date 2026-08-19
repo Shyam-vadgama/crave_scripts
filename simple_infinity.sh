@@ -8,7 +8,7 @@ echo "========================================"
 rm -rf .repo/local_manifest
 
 echo "========================================"
-echo " Initializing Evolution-X manifest"
+echo " Initializing Infinity-X manifest"
 echo "========================================"
 
 repo init --depth=1 --no-repo-verify --git-lfs -u https://github.com/ProjectInfinity-X/manifest -b 16 -g default,-mips,-darwin,-notdefault
