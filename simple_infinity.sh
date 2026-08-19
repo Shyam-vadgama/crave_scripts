@@ -1,0 +1,106 @@
+#!/bin/bash
+set -e
+
+echo "========================================"
+echo " Cleaning old Repo manifest state"
+echo "========================================"
+
+rm -rf .repo/local_manifest
+
+echo "========================================"
+echo " Initializing Evolution-X manifest"
+echo "========================================"
+
+repo init --depth=1 --no-repo-verify --git-lfs -u https://github.com/ProjectInfinity-X/manifest -b 16 -g default,-mips,-darwin,-notdefault
+
+echo "========================================"
+echo " Syncing source"
+echo "========================================"
+
+/opt/crave/resync.sh
+
+echo "========================================"
+echo " Cleaning device-specific trees"
+echo "========================================"
+
+rm -rf device/xiaomi/warm
+rm -rf vendor/xiaomi/warm
+rm -rf device/xiaomi/warm-kernel
+rm -rf hardware/xiaomi
+
+echo "========================================"
+echo " Cloning device tree"
+echo "========================================"
+
+git clone https://github.com/Shyam-vadgama/device_xiaomi_warm \
+    device/xiaomi/warm
+
+echo "========================================"
+echo " Cloning kernel"
+echo "========================================"
+
+git clone https://github.com/Shyam-vadgama/warm-kernel \
+    -b main device/xiaomi/warm-kernel
+
+echo "========================================"
+echo " Cloning Xiaomi hardware"
+echo "========================================"
+
+git clone https://github.com/LineageOS/android_hardware_xiaomi \
+    -b lineage-23.2 hardware/xiaomi
+
+echo "========================================"
+echo " Cloning vendor"
+echo "========================================"
+
+git clone https://github.com/Shyam-vadgama/vendor_xiaomi_warm.git \
+    -b lineage-23.2 vendor/xiaomi/warm
+
+echo "========================================"
+echo " Patching Qualcomm CAF common"
+echo "========================================"
+
+BOARDS_MK="hardware/qcom-caf/common/qcom_boards.mk"
+DEFS_MK="hardware/qcom-caf/common/qcom_defs.mk"
+
+# Fresh fetch — pichle builds ki corrupt state clean karo
+curl -fsSL \
+    "https://raw.githubusercontent.com/LineageOS/android_hardware_qcom-caf_common/lineage-22.2/qcom_boards.mk" \
+    -o "$BOARDS_MK"
+
+curl -fsSL \
+    "https://raw.githubusercontent.com/LineageOS/android_hardware_qcom-caf_common/lineage-22.2/qcom_defs.mk" \
+    -o "$DEFS_MK"
+
+# Fresh file pe pitti add karo
+sed -i '/^QCOM_BOARD_PLATFORMS += volcano/a QCOM_BOARD_PLATFORMS += pitti' "$BOARDS_MK"
+sed -i '/^UM_6_1_FAMILY :=/ s/$/ pitti/' "$DEFS_MK"
+
+echo "=== Patch Verification ==="
+grep -n 'pineapple\|volcano\|pitti' "$BOARDS_MK"
+grep -n 'UM_6_1_FAMILY' "$DEFS_MK"
+echo "=========================="
+
+echo "========================================"
+echo " Applying local manifest fixes"
+echo "========================================"
+
+mkdir -p .repo/local_manifests
+
+cat > .repo/local_manifests/remove_conflicts.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <!-- Remove AOSP Calendar to avoid CalendarTests conflict with Etar -->
+  <remove-project name="platform/packages/apps/Calendar" />
+</manifest>
+EOF
+
+echo "========================================"
+echo " Starting build"
+echo "========================================"
+
+. build/envsetup.sh
+
+lunch lineage_warm-userdebug
+
+m bacon -j$(nproc --all)
