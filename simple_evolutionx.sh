@@ -109,13 +109,6 @@ echo "========================================"
 
 mkdir -p .repo/local_manifests
 
-cat > .repo/local_manifests/remove_conflicts.xml << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest>
-  <!-- Remove AOSP Calendar to avoid CalendarTests conflict with Etar -->
-  <remove-project name="platform/packages/apps/Calendar" />
-</manifest>
-EOF
 
 echo "========================================"
 echo " Starting build"
