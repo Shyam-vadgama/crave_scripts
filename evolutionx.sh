@@ -43,6 +43,7 @@ fi
 
 echo "============================"
 
+source build/envsetup.sh
 lunch lineage_warm-bp4a-userdebug
 echo "Lunch Done ,Now BUilding"
 echo "=============================="
