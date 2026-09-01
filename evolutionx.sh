@@ -42,3 +42,14 @@ else
 fi
 
 echo "============================"
+
+lunch lineage_warm-bp4a-userdebug
+echo "Lunch Done ,Now BUilding"
+echo "=============================="
+
+m evolution
+echo "Build Done"
+echo "=============================="
+
+
+
