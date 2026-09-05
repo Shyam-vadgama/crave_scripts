@@ -51,28 +51,7 @@ echo "============================"
 
 DEVICE_MK="device/xiaomi/warm/lineage_warm.mk"
 
-# Change Lineage common config to Rising common config
-sed -i 's|$(call inherit-product, vendor/lineage/config/common_full_phone.mk)|$(call inherit-product, vendor/rising/config/common_full_phone.mk)|' "$DEVICE_MK"
 
-if grep -qF '$(call inherit-product, vendor/rising/config/common_full_phone.mk)' "$DEVICE_MK"; then
-    echo "Successfully changed:"
-    echo "vendor/lineage/config/common_full_phone.mk"
-    echo "to:"
-    echo "vendor/rising/config/common_full_phone.mk"
-else
-    echo "ERROR: Failed to update $DEVICE_MK"
-    exit 1
-fi
-
-# Add OTA URL
-echo 'PRODUCT_SYSTEM_PROPERTIES += lineage.updater.uri=https://raw.githubusercontent.com/Shyam-vadgama/warm_ota/evolution/warm.json' \
-    >> "$DEVICE_MK"
-
-# Add maintainer
-echo 'RISING_MAINTAINER="Shyam-Vadgama"' \
-    >> "$DEVICE_MK"
-
-echo "Device configuration updated."
 
 echo "============================"
 echo "Renaming Kernel Module Directory..."
@@ -143,7 +122,7 @@ echo "============================"
 
 gk -s 
 
-rise b
+mka bacon
 
 echo "============================"
 echo "Build Done Successfully!"
