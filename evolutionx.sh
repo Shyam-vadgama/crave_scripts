@@ -9,7 +9,7 @@ echo "============================"
 
 # 1. Clean local manifests & init repo
 rm -rf .repo/local_manifests/
-repo init -u https://github.com/Evolution-X/manifest -b bka --git-lfs
+repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs --depth=1
 
 # 2. Crave Resync
 /opt/crave/resync.sh
@@ -20,10 +20,10 @@ echo "============================"
 
 rm -rf device/xiaomi/warm device/xiaomi/warm-kernel vendor/xiaomi/warm hardware/xiaomi
 
-git clone https://github.com/Shyam-vadgama/device_xiaomi_warm device/xiaomi/warm
-git clone https://github.com/Shyam-vadgama/warm_kernel device/xiaomi/warm-kernel
-git clone https://github.com/Shyam-vadgama/vendor_xiaomi_warm vendor/xiaomi/warm
-git clone https://github.com/LineageOS/android_hardware_xiaomi hardware/xiaomi
+git clone https://github.com/Shyam-vadgama/device_xiaomi_warm device/xiaomi/warm --depth=1
+git clone https://github.com/Shyam-vadgama/warm_kernel device/xiaomi/warm-kernel --depth=1
+git clone https://github.com/Shyam-vadgama/vendor_xiaomi_warm vendor/xiaomi/warm --depth=1
+git clone https://github.com/LineageOS/android_hardware_xiaomi hardware/xiaomi --depth=1
 
 OLD_MODULE_DIR="device/xiaomi/warm-kernel/modules/system_dlkm/6.1.118-android14-11-ga3b9c44908dd-ab13320413/"
 NEW_MODULE_DIR="device/xiaomi/warm-kernel/modules/system_dlkm/6.1.138-android14-11-g0c3d559bcd85-ab14529422"
@@ -38,7 +38,7 @@ fi
 # Cloning hardware/qcom-caf/common
 echo "Cloning qcom-caf common..."
 rm -rf hardware/qcom-caf/common
-git clone https://github.com/Shyam-vadgama/android_hardware_qcom-caf_common hardware/qcom-caf/common
+git clone https://github.com/Shyam-vadgama/android_hardware_qcom-caf_common hardware/qcom-caf/common --depth=1
 
 echo "============================"
 echo "Verifying qcom-caf/common files..."
