@@ -9,6 +9,7 @@ echo "============================"
 
 # 1. Clean local manifests & init repo
 rm -rf .repo/local_manifests/
+rm -rf .repo/
 repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs --depth=1
 
 # 2. Crave Resync
