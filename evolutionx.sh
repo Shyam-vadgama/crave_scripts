@@ -19,7 +19,7 @@ echo "============================"
 echo "Cloning Device Trees..."
 echo "============================"
 
-rm -rf device/xiaomi/warm device/xiaomi/warm-kernel vendor/xiaomi/warm hardware/xiaomi
+rm -rf device/xiaomi/warm device/xiaomi/warm-kernel vendor/xiaomi/warm hardware/xiaomi packages/apps/trebuchet device/xiaomi/sdm845-common
 
 git clone https://github.com/Shyam-vadgama/device_xiaomi_warm device/xiaomi/warm --depth=1
 git clone https://github.com/Shyam-vadgama/warm_kernel device/xiaomi/warm-kernel --depth=1
