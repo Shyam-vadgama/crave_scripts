@@ -13,7 +13,12 @@ rm -rf .repo/
 repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs --depth=1
 
 # 2. Crave Resync
-/opt/crave/resync.sh
+/opt/crave/resync.sh || repo sync \
+        -c \
+        --force-sync \
+        --force-remove-dirty \
+        --no-tags \
+        --no-clone-bundle 
 
 echo "============================"
 echo "Cloning Device Trees..."
